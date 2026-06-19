@@ -602,13 +602,10 @@
 <!-- NAV -->
 <nav class="top-nav">
   <div class="nav-brand">CS Central</div>
-  <div class="nav-tab active" onclick="showTab('visao')">01 · Visão Geral</div>
-  <div class="nav-tab" onclick="showTab('fluxo')">02 · Fluxo Onboarding</div>
+  <div class="nav-tab active" onclick="showTab('fluxo')">02 · Fluxo Onboarding</div>
   <div class="nav-tab" onclick="showTab('docs')">03 · Documentação</div>
   <div class="nav-tab" onclick="showTab('templates')">04 · Templates</div>
   <div class="nav-tab" onclick="showTab('faq')">05 · FAQ</div>
-  <div class="nav-tab" onclick="showTab('checklist')">06 · Checklist CS</div>
-  <div class="nav-tab" onclick="showTab('pipeline')">07 · Pipeline</div>
   <div class="nav-tab" onclick="showTab('sla')">SLA</div>
   <div class="nav-tab" onclick="showTab('followup')">Follow-up</div>
   <div class="nav-tab" onclick="showTab('scripts')">Scripts</div>
@@ -618,7 +615,7 @@
 </nav>
 
 <!-- ===================== ABA 01 — VISÃO GERAL ===================== -->
-<div id="visao" class="content active">
+<div id="visao" class="content">
   <div class="section-header">
     <div class="section-icon">📊</div>
     <div class="section-title">
@@ -713,7 +710,7 @@
 </div>
 
 <!-- ===================== ABA 02 — FLUXO ONBOARDING ===================== -->
-<div id="fluxo" class="content">
+<div id="fluxo" class="content active">
   <div class="section-header">
     <div class="section-icon">🔄</div>
     <div class="section-title">
@@ -2024,6 +2021,7 @@ Junior | Customer Success</div>
     <div class="sla-row"><div class="sla-action">Envio do acesso à plataforma de workshops bônus</div><div class="sla-prazo">24h após validação documental</div><div class="sla-resp">Junior / CS</div></div>
     <div class="sla-row"><div class="sla-action">Ligação ativa (D+7)</div><div class="sla-prazo">No máximo D+7 sem envio de documentação</div><div class="sla-resp">Junior / CS</div></div>
     <div class="sla-row"><div class="sla-action">Escalada para coordenação</div><div class="sla-prazo">D+10 sem resposta ou envio</div><div class="sla-resp">CS / Coordenação</div></div>
+    <div class="sla-row"><div class="sla-action">Tempo para conversão de cancelamento</div><div class="sla-prazo">24 horas após solicitação</div><div class="sla-resp">Junior / CS</div></div>
   </div>
 </div>
 
@@ -2558,78 +2556,24 @@ function copyTemplate(id) {
   });
 }
 
-// ── BANCO DE MENSAGENS ────────────────────────────────────
+// BANCO DE MENSAGENS
 function showMsgCat(id, btn) {
   document.querySelectorAll('.msg-cat-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('#msg-nav .curso-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('msgcat-' + id).classList.add('active');
   btn.classList.add('active');
+  if (['boasvindas','documentacao','encerramento'].includes(id)) renderMsgGrid(id);
+  if (id === 'urgencia') renderUrgencia('azure');
 }
 
-const msgDados = {
-  boasvindas: [
-    "Seja muito bem-vindo(a) à sua nova jornada na Pós-Graduação em [nome da pós]! 🎓\nMeu nome é Junior e estou aqui para te guiar em cada etapa do seu onboarding. Pode contar comigo!",
-    "Olá! É com muito prazer que te recebo aqui na Pós-Graduação em [nome da pós]! 😊\nSou o Junior, seu ponto de contato durante o onboarding. Vamos juntos nessa etapa!",
-    "Boas-vindas à Pós-Graduação em [nome da pós]! 🚀\nMeu nome é Junior e fui designado para te acompanhar durante o processo de onboarding. Sempre que tiver dúvida, é só me chamar aqui.",
-    "Que alegria ter você conosco na Pós-Graduação em [nome da pós]! 🎉\nSou o Junior e vou ser o seu guia durante o onboarding. Me conta como posso te ajudar a começar com o pé direito!",
-    "Bem-vindo(a) à sua nova fase! Você acaba de iniciar sua jornada na Pós-Graduação em [nome da pós]. 🌟\nAqui quem fala é o Junior — estou à disposição para te apoiar em tudo que precisar no onboarding.",
-    "Oi! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! ✨\nSou o Junior e estarei contigo durante todo o processo de onboarding. Vamos começar?",
-    "Olá, tudo bem? Primeiro de tudo: bem-vindo(a) à Pós-Graduação em [nome da pós]! 🙌\nMeu nome é Junior. Fui designado para te guiar no onboarding e garantir que você comece sua jornada sem nenhum obstáculo.",
-    "Que ótima decisão! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 🎓\nSou o Junior e vou estar por aqui para te apoiar em cada etapa do seu onboarding. Pode contar!",
-    "Olá! É um prazer receber você na Pós-Graduação em [nome da pós]! 😄\nMeu nome é Junior. Durante o seu onboarding, estarei aqui para facilitar tudo o que precisar. Vamos lá?",
-    "Bem-vindo(a) a bordo! Sua jornada na Pós-Graduação em [nome da pós] começa agora. 🚀\nSou o Junior — seu ponto de apoio durante o onboarding. Qualquer dúvida, estou a um clique de distância.",
-    "Oi! Fico muito feliz em te receber na Pós-Graduação em [nome da pós]! 🌱\nAqui é o Junior. Estou aqui para te guiar no onboarding e deixar tudo pronto para você começar seus estudos com tranquilidade.",
-    "Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 💡\nMeu nome é Junior e serei o seu parceiro durante o onboarding. Pode me chamar a qualquer momento — estou aqui para isso!",
-    "Olá, bem-vindo(a)! Você acaba de dar um passo importante ao ingressar na Pós-Graduação em [nome da pós]. 🎯\nSou o Junior e vou te acompanhar durante todo o processo de onboarding. Vamos tornar esse início o mais tranquilo possível!",
-    "Que bom ter você aqui! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 🤝\nSou o Junior e estou à sua disposição durante o onboarding. Fique à vontade para tirar qualquer dúvida.",
-    "Boas-vindas! É um prazer iniciar essa jornada com você na Pós-Graduação em [nome da pós]. 🎓\nMeu nome é Junior e serei o seu guia durante o onboarding. Vamos começar com o pé direito?"
-  ],
-  documentacao: [
-    "Para efetivar sua matrícula, o próximo passo é enviar sua documentação. 📄\nNa página inicial da plataforma, localize a aba com o nome do seu curso — [nome da pós] — clique em Acessar o Curso e, logo abaixo do banner, você vai encontrar a opção Enviar Documentos. É por lá que tudo começa!",
-    "Agora precisamos efetivar sua matrícula! Para isso, acesse a plataforma de estudos, localize a aba [nome da pós] na página inicial e clique em Acessar o Curso. 📋\nLogo abaixo do banner, você vai ver a opção Enviar Documentos. É só clicar e seguir os passos indicados.",
-    "Tudo certo por aqui! O próximo passo é a documentação. 📁\nEntre na plataforma de estudos, vá até a aba [nome da pós] na página inicial, clique em Acessar o Curso e, na página seguinte, localize a opção Enviar Documentos — ela fica logo abaixo do banner.",
-    "Para garantir sua matrícula, precisamos dos seus documentos! 📎\nAcesse a plataforma de estudos, encontre a aba [nome da pós] na página inicial e clique em Acessar o Curso. Desça um pouco a página e você vai encontrar o botão Enviar Documentos.",
-    "Próxima etapa: envio de documentos! 📄\nNa plataforma de estudos, na página inicial, clique na aba do seu curso [nome da pós] e depois em Acessar o Curso. Logo abaixo do banner da página seguinte, estará a opção Enviar Documentos.",
-    "Estamos quase lá! Para efetivar a matrícula, precisamos da sua documentação. 🗂️\nAcesse a plataforma, vá até a aba [nome da pós] na página inicial e clique em Acessar o Curso. Na próxima tela, logo abaixo do banner, você encontra o botão Enviar Documentos.",
-    "Só falta um passo para efetivar sua matrícula: o envio dos documentos. ✅\nNa plataforma de estudos, na página inicial, localize a aba [nome da pós] e clique em Acessar o Curso. Descendo um pouco, você vai ver a opção Enviar Documentos — é só seguir as instruções!",
-    "Para concluir sua matrícula, você precisa subir a documentação na plataforma. 📋\nEntre na plataforma de estudos, clique na aba [nome da pós] na página inicial e depois em Acessar o Curso. Na página seguinte, logo após o banner, aparece a opção Enviar Documentos.",
-    "Quase lá! Vamos agora cuidar da documentação para efetivar sua matrícula. 📁\nAcesse a plataforma, localize a aba com o nome do seu curso [nome da pós] na página inicial e clique em Acessar o Curso. Logo abaixo do banner você encontra o campo Enviar Documentos.",
-    "Próxima missão: enviar a documentação! 🎯\nNa página inicial da plataforma de estudos, localize a aba [nome da pós], clique em Acessar o Curso e, na tela seguinte logo abaixo do banner, você vai encontrar o botão Enviar Documentos.",
-    "Para sua matrícula ficar 100% efetivada, precisamos dos seus documentos. 📄\nAcesse a plataforma de estudos, vá à aba [nome da pós] na página inicial e clique em Acessar o Curso. Na página que abrir, desça até abaixo do banner e clique em Enviar Documentos.",
-    "O próximo passo é bem simples: envio de documentos! 🗂️\nEntre na plataforma de estudos, clique na aba [nome da pós] na página inicial, depois em Acessar o Curso. Logo depois do banner, você vai ver a opção Enviar Documentos — é por ali que você faz o envio.",
-    "Matrícula quase efetivada! Agora é só subir a documentação. ✅\nNa plataforma de estudos, encontre a aba [nome da pós] na página inicial e clique em Acessar o Curso. Na sequência, logo abaixo do banner, estará disponível a opção Enviar Documentos.",
-    "Para finalizar sua matrícula, vamos para o envio de documentos! 📎\nAcesse a plataforma de estudos, localize a aba do seu curso [nome da pós] na página inicial e clique em Acessar o Curso. Descendo um pouco na tela seguinte, você encontra o botão Enviar Documentos.",
-    "Estamos em boa evolução! Agora precisamos efetivar sua matrícula com o envio dos documentos. 📋\nVá até a plataforma de estudos, clique na aba [nome da pós] na página inicial e depois em Acessar o Curso. Logo abaixo do banner da próxima página você vai encontrar Enviar Documentos."
-  ],
-  empregadados: [],  // substituído pelo banco por curso (bancoWkpDados)
-  encerramento: [
-    "Mais uma vez, seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 🎓\nSempre que precisar, pode me chamar aqui — estarei por perto durante toda a sua jornada. Bons estudos!",
-    "É isso! Sua matrícula está encaminhada e você já tem tudo para começar com o pé direito na Pós-Graduação em [nome da pós]. 🚀\nQualquer dúvida que surgir, é só me chamar aqui. Conte comigo!",
-    "Chegamos ao fim do seu onboarding, mas estou aqui para qualquer necessidade que aparecer. Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 🌟\nBons estudos e sucesso nessa jornada!",
-    "Fico feliz em ter te acompanhado nessa etapa! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]. 🤝\nSe precisar de qualquer suporte ao longo do caminho, estou à disposição. Vai em frente!",
-    "Tudo certo por aqui! Você já tem o que precisa para começar na Pós-Graduação em [nome da pós]. 🎯\nFique à vontade para me chamar sempre que precisar — estarei aqui para dar o suporte necessário. Bons estudos!",
-    "Seu onboarding está concluído! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]. 🎉\nAo longo da sua jornada, qualquer dúvida ou necessidade, pode me acionar aqui. É um prazer te acompanhar!",
-    "Estamos prontos para começar! Seja bem-vindo(a) à Pós-Graduação em [nome da pós]. 🌱\nDurante toda a sua jornada, estarei disponível para o suporte que precisar. Conta comigo!",
-    "Que essa seja uma jornada de muito aprendizado e crescimento! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]. 🙌\nSempre que precisar de apoio, pode me chamar — estou aqui por você.",
-    "Onboarding concluído com sucesso! Agora é hora de mergulhar nos estudos. Bem-vindo(a) à Pós-Graduação em [nome da pós]. 📚\nQualquer dúvida que surgir durante o curso, pode me acionar aqui sem hesitar.",
-    "Muito obrigado por me acompanhar nesse processo! Seja bem-vindo(a) à Pós-Graduação em [nome da pós]. ✨\nEstou aqui para garantir que sua jornada seja tranquila e produtiva. Bons estudos!",
-    "Chegamos ao final do onboarding e tudo está pronto para você começar. Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]! 🎓\nSempre que precisar de suporte, é só me chamar. Estou aqui para isso!",
-    "Fico feliz em te ver pronto(a) para essa nova fase! Bem-vindo(a) à Pós-Graduação em [nome da pós]. 💡\nAo longo da jornada, pode contar com o meu suporte sempre que precisar. Vamos juntos!",
-    "Parabéns por chegar até aqui! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]. 🏆\nEstou à disposição durante toda a sua jornada conosco. Qualquer dúvida, só me chamar!",
-    "Seu início de jornada está garantido! Bem-vindo(a) à Pós-Graduação em [nome da pós]. 🚀\nSe tiver qualquer dúvida ou precisar de suporte ao longo do caminho, pode me acionar aqui — estarei por perto!",
-    "Encerramos por aqui, mas o canal permanece aberto! Seja muito bem-vindo(a) à Pós-Graduação em [nome da pós]. 🤝\nSempre que precisar de apoio durante a sua jornada, estarei aqui para dar o suporte necessário. Bons estudos!"
-  ]
-};
-
-function renderMsgCards(categoria) {
-  const grid = document.getElementById('msg-grid-' + categoria);
+function renderMsgGrid(cat) {
+  const grid = document.getElementById('msg-grid-' + cat);
   if (!grid || grid.dataset.rendered) return;
-  msgDados[categoria].forEach((msg, i) => {
+  const msgs = msgDados[cat] || [];
+  msgs.forEach((msg, i) => {
     const card = document.createElement('div');
     card.className = 'msg-card';
-    const htmlMsg = msg
-      .replace(/\[nome da pós\]/g, '<span class="msg-placeholder">[nome da pós]</span>')
-      .replace(/\n/g, '<br>');
+    const htmlMsg = msg.replace(/\n/g, '<br>');
     card.innerHTML = `
       <div class="msg-card-top">
         <span class="msg-card-num">VERSÃO ${String(i+1).padStart(2,'0')}</span>
@@ -2644,10 +2588,10 @@ function renderMsgCards(categoria) {
       const texto = decodeURIComponent(this.dataset.texto);
       navigator.clipboard.writeText(texto).then(() => {
         this.classList.add('copied');
-        this.innerHTML = `<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Copiado!`;
+        this.innerHTML = '<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Copiado!';
         setTimeout(() => {
           this.classList.remove('copied');
-          this.innerHTML = `<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-4 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Copiar`;
+          this.innerHTML = '<svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-4 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Copiar';
         }, 2000);
       });
     });
@@ -2656,15 +2600,112 @@ function renderMsgCards(categoria) {
   grid.dataset.rendered = '1';
 }
 
-// Renderizar ao carregar
-['boasvindas','documentacao','encerramento'].forEach(renderMsgCards);
+const msgDados = {
+    boasvindas: [
+    "Olá, [nome da pós]! Seja muito bem-vindo(a) à pós-graduação em [nome da pós]. 🎓\nMeu nome é Junior e serei o seu ponto de contato durante o onboarding. Estou aqui para garantir que você tenha a melhor experiência possível nesta jornada. Pode contar comigo!",
+    "Olá! É com grande satisfação que recebo você na pós-graduação em [nome da pós]. 😊\nSou o Junior, responsável pelo seu acompanhamento durante o processo de onboarding. Qualquer dúvida que surgir ao longo do caminho, é só me chamar aqui.",
+    "Bem-vindo(a) à pós-graduação em [nome da pós]! 🚀\nMeu nome é Junior e fui designado para te acompanhar em cada etapa do onboarding. Estarei por aqui sempre que precisar de suporte.",
+    "Que alegria receber você na pós-graduação em [nome da pós]! 🎉\nSou o Junior e vou ser o seu guia durante o onboarding. Me conta como posso te ajudar a começar da melhor forma.",
+    "Olá! Você acaba de iniciar sua jornada na pós-graduação em [nome da pós]. 🌟\nMeu nome é Junior e estou à disposição para te apoiar em tudo que precisar ao longo do onboarding. Seja muito bem-vindo(a)!",
+    "Seja muito bem-vindo(a) à pós-graduação em [nome da pós]! ✨\nSou o Junior e estarei contigo durante todo o processo de onboarding. Quando quiser começar, é só me avisar.",
+    "Olá, tudo bem? Primeiro de tudo: bem-vindo(a) à pós-graduação em [nome da pós]! 🙌\nMeu nome é Junior. Estou aqui para garantir que você inicie sua jornada acadêmica sem nenhum obstáculo.",
+    "Que ótima escolha! Seja muito bem-vindo(a) à pós-graduação em [nome da pós]. 🎓\nSou o Junior e estarei por aqui para te apoiar em cada etapa do onboarding. Pode contar comigo sempre que precisar.",
+    "Olá! É um prazer receber você na pós-graduação em [nome da pós]. 😄\nMeu nome é Junior. Durante o onboarding, estarei disponível para facilitar tudo o que precisar. Vamos começar?",
+    "Bem-vindo(a) à pós-graduação em [nome da pós]! 🚀\nSou o Junior -- seu ponto de apoio durante o onboarding. Estou a um clique de distância sempre que precisar.",
+    "Olá! Fico muito feliz em receber você na pós-graduação em [nome da pós]. 🌱\nMeu nome é Junior. Vou acompanhar o seu onboarding para que tudo ocorra com tranquilidade e sem pendências.",
+    "Seja muito bem-vindo(a) à pós-graduação em [nome da pós]! 💡\nMeu nome é Junior e serei o seu parceiro durante o onboarding. Estou à disposição a qualquer momento.",
+    "Olá, bem-vindo(a)! Você acaba de dar um passo muito importante ao ingressar na pós-graduação em [nome da pós]. 🎯\nSou o Junior e vou te acompanhar durante todo o processo. Vamos tornar esse início o mais tranquilo possível.",
+    "Que bom ter você aqui! Seja muito bem-vindo(a) à pós-graduação em [nome da pós]. 🤝\nSou o Junior e estou à sua disposição durante o onboarding. Fique à vontade para tirar qualquer dúvida.",
+    "Bem-vindo(a) à pós-graduação em [nome da pós]! 🎓\nMeu nome é Junior e serei o seu guia durante o onboarding. Estou aqui para garantir que você comece com o pé direito."
+  ],
+  documentacao: [
+    "Para efetivar sua matrícula, o próximo passo é enviar sua documentação. 📄\nNa página inicial da plataforma, localize a aba com o nome do seu curso -- [nome da pós] -- clique em Acessar o Curso e, logo abaixo do banner, você vai encontrar a opção Enviar Documentos. É por lá que tudo começa!",
+    "Agora precisamos efetivar sua matrícula! Para isso, acesse a plataforma de estudos, localize a aba [nome da pós] na página inicial e clique em Acessar o Curso. 📋\nLogo abaixo do banner, você vai ver a opção Enviar Documentos. É só clicar e seguir os passos indicados.",
+    "Tudo certo por aqui! O próximo passo é a documentação. 📁\nEntre na plataforma de estudos, vá até a aba [nome da pós] na página inicial, clique em Acessar o Curso e, na página seguinte, localize a opção Enviar Documentos -- ela fica logo abaixo do banner.",
+    "Para garantir sua matrícula, precisamos dos seus documentos! 📎\nAcesse a plataforma de estudos, encontre a aba [nome da pós] na página inicial e clique em Acessar o Curso. Desça um pouco a página e você vai encontrar o botão Enviar Documentos.",
+    "Próxima etapa: envio de documentos! 📄\nNa plataforma de estudos, na página inicial, clique na aba do seu curso [nome da pós] e depois em Acessar o Curso. Logo abaixo do banner da página seguinte, estará a opção Enviar Documentos.",
+    "Estamos quase lá! Para efetivar a matrícula, precisamos da sua documentação. 🗂️\nAcesse a plataforma, vá até a aba [nome da pós] na página inicial e clique em Acessar o Curso. Na próxima tela, logo abaixo do banner, você encontra o botão Enviar Documentos.",
+    "Só falta um passo para efetivar sua matrícula: o envio dos documentos. ✅\nNa plataforma de estudos, na página inicial, localize a aba [nome da pós] e clique em Acessar o Curso. Descendo um pouco, você vai ver a opção Enviar Documentos -- é só seguir as instruções!",
+    "Para concluir sua matrícula, você precisa subir a documentação na plataforma. 📋\nEntre na plataforma de estudos, clique na aba [nome da pós] na página inicial e depois em Acessar o Curso. Na página seguinte, logo após o banner, aparece a opção Enviar Documentos.",
+    "Quase lá! Vamos agora cuidar da documentação para efetivar sua matrícula. 📁\nAcesse a plataforma, localize a aba com o nome do seu curso [nome da pós] na página inicial e clique em Acessar o Curso. Logo abaixo do banner você encontra o campo Enviar Documentos.",
+    "Próxima missão: enviar a documentação! 🎯\nNa página inicial da plataforma de estudos, localize a aba [nome da pós], clique em Acessar o Curso e, na tela seguinte logo abaixo do banner, você vai encontrar o botão Enviar Documentos.",
+    "Para sua matrícula ficar 100% efetivada, precisamos dos seus documentos. 📄\nAcesse a plataforma de estudos, vá à aba [nome da pós] na página inicial e clique em Acessar o Curso. Na página que abrir, desça até abaixo do banner e clique em Enviar Documentos.",
+    "O próximo passo é bem simples: envio de documentos! 🗂️\nEntre na plataforma de estudos, clique na aba [nome da pós] na página inicial, depois em Acessar o Curso. Logo depois do banner, você vai ver a opção Enviar Documentos -- é por ali que você faz o envio.",
+    "Matrícula quase efetivada! Agora é só subir a documentação. ✅\nNa plataforma de estudos, encontre a aba [nome da pós] na página inicial e clique em Acessar o Curso. Na sequência, logo abaixo do banner, estará disponível a opção Enviar Documentos.",
+    "Para finalizar sua matrícula, vamos para o envio de documentos! 📎\nAcesse a plataforma de estudos, localize a aba do seu curso [nome da pós] na página inicial e clique em Acessar o Curso. Descendo um pouco na tela seguinte, você encontra o botão Enviar Documentos.",
+    "Estamos em boa evolução! Agora precisamos efetivar sua matrícula com o envio dos documentos. 📋\nVá até a plataforma de estudos, clique na aba [nome da pós] na página inicial e depois em Acessar o Curso. Logo abaixo do banner da próxima página você vai encontrar Enviar Documentos."
+  ],
+  empregadados: [],  // substituído pelo banco por curso (bancoWkpDados)
+  encerramento: [
+    "Parabéns, [NOME]! 🎉\nVocê concluiu todas as etapas do onboarding com sucesso. É um prazer acompanhar sua jornada. Estou aqui sempre que precisar de suporte ao longo do curso. Bons estudos!",
+    "Onboarding concluído com sucesso, [NOME]! 🏁\nTodas as etapas foram finalizadas e você já tem acesso a tudo que o curso oferece. Conte comigo durante toda a sua jornada acadêmica. Bons estudos!",
+    "[NOME], chegamos ao fim do onboarding! 🎓\nFoi um prazer te acompanhar nessa etapa inicial. A partir de agora, estou aqui para o que precisar ao longo do curso. Que seja uma jornada de muito aprendizado!",
+    "Tudo certo, [NOME]! Onboarding finalizado. ✅\nVocê completou todas as etapas com êxito. Estou à disposição durante toda a sua trajetória acadêmica. Bons estudos!",
+    "Parabéns pela dedicação, [NOME]! 🌟\nTodas as etapas do onboarding foram concluídas. Seu acesso está completo e você já pode aproveitar tudo que o curso tem a oferecer. Bons estudos!",
+    "Onboarding encerrado com sucesso! 🎉\n[NOME], foi muito bom te acompanhar nesse início de jornada. Estou por aqui sempre que precisar de suporte. Que o curso supere as suas expectativas!",
+    "[NOME], você finalizou o onboarding! 🏆\nTodas as etapas estão concluídas e você está com acesso completo ao curso. Conte comigo para o que precisar. Bons estudos!",
+    "Parabéns, [NOME]! 🎓\nVocê concluiu o onboarding com sucesso. Estou muito feliz em fazer parte do início dessa jornada. A equipe de CS segue à disposição para qualquer necessidade.",
+    "Etapas concluídas, [NOME]! ✅\nSeu onboarding está finalizado e você já tem acesso completo a todos os recursos do curso. Qualquer dúvida ao longo da jornada, pode me chamar. Bons estudos!",
+    "Chegamos ao fim do onboarding, [NOME]! 🌱\nFoi um prazer te acompanhar nesse processo. Seu acesso está completo -- aproveite ao máximo tudo que o curso oferece. Estou aqui se precisar!",
+    "[NOME], onboarding concluído! 🚀\nTodas as etapas foram finalizadas com sucesso. Que essa jornada de aprendizado seja transformadora para você. Conte comigo sempre que precisar.",
+    "Parabéns pelo comprometimento, [NOME]! 🎉\nVocê finalizou todas as etapas do onboarding. A equipe de CS segue disponível durante toda a sua trajetória acadêmica. Bons estudos!",
+    "[NOME], tudo certo por aqui! ✅\nOnboarding encerrado com sucesso. Seu acesso está completo e você já pode mergulhar nos conteúdos do curso. Qualquer necessidade, estou à disposição.",
+    "Finalizamos o onboarding, [NOME]! 🏁\nFoi muito bom acompanhar o seu início nessa jornada. Estou aqui sempre que precisar de apoio ao longo do curso. Bons estudos!",
+    "Parabéns, [NOME]! Todas as etapas concluídas. 🎓\nSeu onboarding está finalizado e você já tem acesso completo ao curso. Que essa seja uma experiência acadêmica muito enriquecedora. Conte comigo!"
+  ]
+};
 
-function showTplCurso(id, btn) {
-  document.querySelectorAll('.tpl-curso-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('#tpl-nav .curso-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('tpl-' + id).classList.add('active');
-  btn.classList.add('active');
-}
+
+const bancoWkpDados = {
+  azure: [
+    "Olá, [NOME]! Tenho uma boa notícia para compartilhar com você. 😊\n\nEstou te enviando um passo a passo para que possa acessar a plataforma da TFTEC. Assim que tiver acesso, me avisa!\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nBons estudos! ☁️",
+    "Olá, [NOME]! Tudo bem? 👋\n\nPassando para te enviar o acesso à plataforma da TFTEC -- conteúdos exclusivos que fazem parte da sua formação em Cloud.\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida no acesso, pode me chamar!",
+    "Olá, [NOME]! ☁️\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. São conteúdos técnicos exclusivos que vão fazer diferença na sua jornada.\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nMe avisa assim que acessar!",
+    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro! O próximo passo é o acesso à plataforma da TFTEC.\n\nEstou te enviando um passo a passo para que você consiga entrar sem dificuldade:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida, estou à disposição.",
+    "Olá, [NOME]! ✅\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC e aproveitar os conteúdos exclusivos da sua pós.\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nBons estudos! 😊",
+    "Olá, [NOME]! 🌟\n\nTenho boas notícias: estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. Todo o conteúdo já está disponível para você.\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConteúdos que vão aprofundar sua formação em Cloud!",
+    "Olá, [NOME]! 🎉\n\nSeu acesso está liberado! Estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nEstou à disposição se precisar de suporte. Bons estudos!",
+    "Olá, [NOME]! 👊\n\nVocê concluiu uma etapa muito importante! Estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida, pode me chamar aqui.",
+    "Olá, [NOME]! ☁️\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. Conteúdos exclusivos que vão turbinar sua jornada.\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nAproveite bastante!",
+    "Olá, [NOME]! 😄\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. Bons estudos!\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConte comigo se precisar de suporte."
+  ],
+  engdados: [
+    "Olá, [NOME]! Tenho uma boa notícia. 😊\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*.\n\nPor favor, confira a caixa de entrada e o spam. Me avisa assim que acessar!",
+    "Olá, [NOME]! ☁️\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA*. Confira a caixa de entrada e o spam e me avisa assim que entrar!",
+    "Olá, [NOME]! 🚀\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. O link chegou no seu e-mail -- verifica lá e me conta como foi!",
+    "Olá, [NOME]! 🎓\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA*. Confira a caixa de entrada e o spam e me avisa se conseguiu entrar! 📊",
+    "Olá, [NOME]! ✅\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. Qualquer problema de acesso, é só me chamar! 😊",
+    "Olá, [NOME]! 🌟\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA*. Verifique a caixa de entrada e o spam e me fala se conseguiu entrar! 👍",
+    "Olá, [NOME]! 🎉\n\nSeu acesso está liberado! Acabei de enviar um e-mail com os dados de acesso à plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. Me avisa quando entrar! 😊",
+    "Olá, [NOME]! 📊\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA*. Confira a caixa de entrada e o spam e me conta se tudo certo!",
+    "Olá, [NOME]! 😄\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. Acessa lá e me avisa como foi!",
+    "Olá, [NOME]! 🚀\n\nAcabei de enviar um e-mail com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA*. Verifique a caixa de entrada e o spam e me avisa assim que confirmar o acesso! 😊"
+  ],
+  ianegocios: [
+    "Olá, [NOME]! Tenho uma boa notícia para você. 🤖\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação.\n\nAcessa pelo link abaixo e me avisa quando entrar:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nBons estudos!",
+    "Olá, [NOME]! 😊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nQualquer dúvida no acesso, estou à disposição!",
+    "Olá, [NOME]! 🚀\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nBons estudos!",
+    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos que vão complementar sua formação. Aproveite! 🤖",
+    "Olá, [NOME]! ✅\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nQualquer dúvida, pode me chamar! 😊",
+    "Olá, [NOME]! 🌟\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos que vão aprofundar sua jornada! 🤖",
+    "Olá, [NOME]! 🎉\n\nSeu acesso está liberado! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nEstou à disposição se precisar de ajuda! 😊",
+    "Olá, [NOME]! 👊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConte comigo! 🚀",
+    "Olá, [NOME]! 😄\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos exclusivos para aprofundar seus estudos. Bom proveito! 🤖",
+    "Olá, [NOME]! 🤖\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação em *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConte comigo se surgir qualquer dúvida! 😊"
+  ],
+  mbadireito: [
+    "Olá, [NOME]! Tenho uma boa notícia para você. ⚖️\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*.\n\nAcessa pelo link abaixo e me avisa quando entrar:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nBons estudos!",
+    "Olá, [NOME]! 😊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nQualquer dúvida no acesso, estou à disposição! ⚖️",
+    "Olá, [NOME]! 🚀\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nBons estudos!",
+    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos sobre IA no universo jurídico. Aproveite! ⚖️",
+    "Olá, [NOME]! ✅\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nQualquer dúvida, pode me chamar! 😊",
+    "Olá, [NOME]! 🌟\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos que vão aprofundar sua visão sobre IA e Direito! ⚖️",
+    "Olá, [NOME]! 🎉\n\nSeu acesso está liberado! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nEstou à disposição se precisar de ajuda! 😊",
+    "Olá, [NOME]! 👊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConte comigo! ⚖️",
+    "Olá, [NOME]! 😄\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos de IA aplicada ao Direito. Bom proveito! ⚖️",
+    "Olá, [NOME]! ⚖️\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConte comigo se surgir qualquer dúvida! 😊"
+  ]
+};
 
 function showBancoWkp(id, btn) {
   document.querySelectorAll('.banco-wkp-content').forEach(el => el.classList.remove('active'));
@@ -2673,57 +2714,6 @@ function showBancoWkp(id, btn) {
   btn.classList.add('active');
   renderBancoWkp(id);
 }
-
-const bancoWkpDados = {
-  azure: [
-    "Oi, [NOME]! 👋\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC.\n\nAcessa pelo link abaixo e me avisa quando entrar:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nBons estudos! 🚀",
-    "Olá, [NOME]! 😊\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC — conteúdos exclusivos para complementar sua formação:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida, estou aqui!",
-    "Oi, [NOME]! Tudo bem? 👋\n\nPassando pra te dar uma boa notícia: estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nBora aprender! ☁️",
-    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro!\n\nO próximo passo é acessar a plataforma da TFTEC. Estou te enviando um passo a passo para que você consiga entrar sem dificuldade:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConteúdos que vão fazer muita diferença na sua jornada. Aproveite!",
-    "Oi, [NOME]! ✅\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC e aproveitar os conteúdos exclusivos:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida é só chamar. Bons estudos! 😊",
-    "Olá, [NOME]! 🌟\n\nBoa notícia: estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. Tudo já está disponível pra você:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConteúdos exclusivos para turbinar sua jornada de aprendizado!",
-    "Oi, [NOME]! 🎉\n\nAcabei de liberar o seu acesso! Estou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nEstou aqui se precisar de qualquer apoio. Bons estudos!",
-    "Olá, [NOME]! 👊\n\nVocê cumpriu mais uma etapa importante!\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC:\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nQualquer dúvida, é só me chamar aqui!",
-    "Oi, [NOME]! Tudo certo? ☁️\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC.\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConteúdos exclusivos para turbinar sua jornada. Aproveite bastante!",
-    "Olá, [NOME]! 😄\n\nEstou te enviando um passo a passo para que você possa acessar a plataforma da TFTEC. Bons estudos!\n\n👉 https://portal.tftecprime.com.br/aulas/pos-graduacao-tftec\n\nConta comigo se precisar de suporte!"
-  ],
-  engdados: [
-    "Oi, [NOME]! 👋\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*.\n\nConfere a caixa de entrada e o spam e me avisa assim que acessar! 😊",
-    "Olá, [NOME]! 😊\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus da sua pós em *Engenharia de Dados e IA* foi enviado pro seu e-mail agora. Confere a caixa de entrada e o spam e me avisa assim que entrar!",
-    "Oi, [NOME]! 👋\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. O link chegou no seu e-mail — verifica lá e me conta como foi! 🚀",
-    "Olá, [NOME]! 🎓\n\nBoa notícia: Acabei de enviar um e-mail para você com o login e senha da plataforma de bônus da pós em *Engenharia de Dados e IA*. Confere na caixa de entrada e no spam e me avisa se conseguiu entrar! 📊",
-    "Oi, [NOME]! ✅\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus da pós. Bons estudos!\n\nAsso à plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. Qualquer problema, me chama! 😊",
-    "Olá, [NOME]! 🌟\n\nSua Acabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus da pós em *Engenharia de Dados e IA* — o link foi enviado pro seu e-mail. Verifica lá e me fala se conseguiu entrar! 👍",
-    "Oi, [NOME]! 🎉\n\nAcabei de liberar o seu acesso à plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*!\n\nConfere o e-mail — deixei tudo lá com os dados de acesso. Me avisa quando entrar! 😊",
-    "Olá, [NOME]! 👊\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus. Arma de workshops bônus da pós em *Engenharia de Dados e IA* está no seu e-mail. Dá uma checada na caixa de entrada e no spam e me conta se tudo certo! 📊",
-    "Oi, [NOME]! Tudo certo? 😄\n\nAcabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus do curso de *Engenharia de Dados e Inteligência Artificial*. Acessa lá e me avisa como foi!",
-    "Olá, [NOME]! 🚀\n\nBoa notícia: Acabei de enviar um e-mail para você com o login e senha da plataforma de workshops bônus da pós em *Engenharia de Dados e IA* está no seu e-mail agora. Verifica lá — caixa de entrada e spam — e me avisa assim que confirmar o acesso! 😊"
-  ],
-  ianegocios: [
-    "Oi, [NOME]! 👋\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação.\n\nAcessa pelo link abaixo e me avisa quando entrar:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nBons estudos! 🤖",
-    "Olá, [NOME]! 😊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nQualquer dúvida, estou aqui!",
-    "Oi, [NOME]! 👋\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nBons estudos! 🚀",
-    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro!\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos que vão complementar sua formação. Aproveite! 🤖",
-    "Oi, [NOME]! ✅\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nQualquer dúvida, me chama! 😊",
-    "Olá, [NOME]! 🌟\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos que vão turbinar sua jornada! 🤖",
-    "Oi, [NOME]! 🎉\n\nAcabei de liberar o seu acesso! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nEstou aqui se precisar de ajuda! 😊",
-    "Olá, [NOME]! 👊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConta comigo! 🚀",
-    "Oi, [NOME]! 😄\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *Inteligência Artificial Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConteúdos exclusivos pra aprofundar seus estudos. Bom proveito! 🤖",
-    "Olá, [NOME]! 🤖\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *IA Aplicada a Negócios*:\n\n👉 https://cunharezende85-boop.github.io/workshops-ia-negocios1/\n\nConta comigo se surgir qualquer dúvida! 😊"
-  ],
-  mbadireito: [
-    "Oi, [NOME]! 👋\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*.\n\nAcessa pelo link abaixo e me avisa quando entrar:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nBons estudos! ⚖️",
-    "Olá, [NOME]! 😊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nQualquer dúvida, estou aqui! ⚖️",
-    "Oi, [NOME]! 👋\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nBons estudos! 🚀",
-    "Olá, [NOME]! 🎓\n\nTudo certo com o seu cadastro!\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos sobre IA no universo jurídico. Aproveite! ⚖️",
-    "Oi, [NOME]! ✅\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nQualquer dúvida, me chama! 😊",
-    "Olá, [NOME]! 🌟\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos que vão aprofundar sua visão sobre IA e Direito! ⚖️",
-    "Oi, [NOME]! 🎉\n\nAcabei de liberar o seu acesso! Estou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nEstou aqui se precisar de ajuda! 😊",
-    "Olá, [NOME]! 👊\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA IA no Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConta comigo! ⚖️",
-    "Oi, [NOME]! 😄\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em Inteligência Artificial Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConteúdos de IA aplicada ao Direito. Bom proveito! ⚖️",
-    "Olá, [NOME]! ⚖️\n\nEstou te enviando via WhatsApp o link de acesso a todos os Workshops bônus desta pós-graduação do *MBA em IA Aplicada ao Direito*:\n\n👉 https://cunharezende85-boop.github.io/workshop-mba/\n\nConta comigo se surgir qualquer dúvida! 😊"
-  ]
-};
 
 function renderBancoWkp(cursoId) {
   const grid = document.getElementById('msg-grid-wkp-' + cursoId);
@@ -2758,75 +2748,75 @@ function renderBancoWkp(cursoId) {
   grid.dataset.rendered = '1';
 }
 
-// ── URGÊNCIA DOCUMENTAÇÃO ────────────────────────────────────
+// URGÊNCIA DOCUMENTAÇÃO
 const urgenciaDados = {
-  azure: [
-    "Oi, [NOME]! 👋\n\nPassei para verificar como você está e percebi que sua documentação ainda não chegou até nós.\n\nEnquanto ela estiver pendente, seu acesso à *TFTEC Prime* — plataforma exclusiva da sua pós em Cloud com Azure — fica bloqueado.\n\nPosso te ajudar a resolver isso agora? Me conta o que está travando! 🔵",
-    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação está pendente e isso está bloqueando seu acesso completo ao curso de *Cloud com Azure*.\n\nO processo é rápido — menos de 5 minutos. Qual etapa está te travando? Me fala aqui que resolvo agora com você!",
-    "Oi, [NOME]! ☁️\n\nNotei que sua documentação ainda não foi enviada.\n\nSem ela, não consigo liberar seu acesso à *TFTEC Prime* — o conteúdo técnico exclusivo da sua pós em *Cloud com Azure* fica fora do seu alcance.\n\nMe conta: teve algum problema de acesso à plataforma?",
-    "Olá, [NOME]! Preciso da sua atenção por um momento. 🔵\n\nSua documentação está pendente e, enquanto isso, parte dos seus benefícios no curso de *Cloud com Azure* ficam bloqueados — incluindo a *TFTEC Prime*.\n\nIsso tem solução rápida. Posso te guiar agora mesmo pelo processo. Topa?",
-    "Oi, [NOME]! Junior aqui. ⚠️\n\nJá faz alguns dias que estou aguardando sua documentação para liberar seu acesso completo à pós em *Cloud com Azure*.\n\nTudo bem por aí? Teve alguma dificuldade com o envio? Me conta aqui — estou disponível agora para resolver junto com você.",
-    "Olá, [NOME]! 🔵\n\nVou ser direto: sua documentação ainda não chegou e isso está segurando a liberação da *TFTEC Prime*, plataforma exclusiva do seu curso de *Cloud com Azure*.\n\nÉ um processo simples. Me avisa agora o que está travando e te ajudo a finalizar hoje mesmo!",
-    "Oi, [NOME]! ☁️\n\nPassei para te avisar que sua documentação ainda está pendente na pós em *Cloud com Azure*.\n\nQuanto mais tempo passar, mais conteúdo exclusivo você perde — a *TFTEC Prime* está esperando por você!\n\nTeve algum problema de acesso à plataforma? Me conta!",
-    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *Cloud com Azure*. 🔵\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver isso juntos? Ou prefere que eu te mande o passo a passo por aqui? Me fala!",
-    "Oi, [NOME]! ⚠️\n\nSua documentação ainda não chegou até nós e o prazo para regularizar sua matrícula na pós em *Cloud com Azure* está avançando.\n\nNão quero que você perca acesso à *TFTEC Prime* por uma pendência que a gente consegue resolver agora em poucos minutos. Me chama aqui!",
-    "Olá, [NOME]! 🔵\n\nMinha missão aqui é garantir que você aproveite tudo que o curso de *Cloud com Azure* tem a oferecer.\n\nMas com a documentação pendente, a *TFTEC Prime* segue bloqueada para você.\n\nMe conta: o que está impedindo o envio? Estou aqui para resolver agora!",
-    "Oi, [NOME]! Junior aqui. ☁️\n\nJá são alguns dias desde que você iniciou o onboarding na pós em *Cloud com Azure* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido, mas isso pode afetar sua matrícula. Me fala o que está acontecendo — resolvo com você agora mesmo!",
-    "Olá, [NOME]! ⚠️\n\nPassando para um aviso importante: sua documentação na pós em *Cloud com Azure* continua pendente.\n\nCom ela regularizada, libero imediatamente seu acesso à *TFTEC Prime*. Vale a pena resolver isso hoje!\n\nTeve dificuldade em alguma etapa? Me chama aqui. 🔵",
-    "Oi, [NOME]! 🔵\n\nEstou aqui para te ajudar a dar mais um passo importante na pós em *Cloud com Azure*: enviar sua documentação.\n\nEnquanto isso estiver pendente, o acesso à *TFTEC Prime* fica bloqueado — e são conteúdos que valem muito.\n\nQual etapa está travando você? Me conta!",
-    "Olá, [NOME]! Aqui é o Junior. ☁️\n\nSua documentação na pós em *Cloud com Azure* segue pendente.\n\nNão quero que isso impacte sua matrícula nem seu acesso à *TFTEC Prime*. Posso te ligar agora para a gente resolver em menos de 5 minutos?\n\nMe avisa aqui! ⚠️",
-    "Oi, [NOME]! 🔵\n\nÚltima tentativa antes de precisar escalar o seu caso: sua documentação na pós em *Cloud com Azure* ainda não chegou até nós.\n\nIsso coloca em risco a regularização da sua matrícula e o acesso à *TFTEC Prime*.\n\nMe responde agora — estou aqui para resolver junto com você. ⚠️"
+    azure: [
+    "Olá, [NOME]! Tudo bem? 😊\n\nPassei para verificar como você está e notei que sua documentação ainda não chegou até nós.\n\nEnquanto ela estiver pendente, seu acesso à *TFTEC Prime* -- plataforma exclusiva da sua pós em Cloud com Azure -- fica bloqueado.\n\nPosso te ajudar a resolver isso agora? Me conta o que está dificultando! 🔵",
+    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação está pendente e isso está impedindo a liberação completa do seu acesso ao curso de *Cloud com Azure*.\n\nO processo é simples e rápido. Me conta qual etapa está te travando -- estou aqui para resolver agora com você!",
+    "Olá, [NOME]! ☁️\n\nPasando por aqui para te avisar que sua documentação ainda não chegou até nós.\n\nSem ela, o acesso à *TFTEC Prime* -- conteúdo técnico exclusivo da sua pós em *Cloud com Azure* -- continua bloqueado.\n\nTeve algum problema de acesso à plataforma? Me conta aqui!",
+    "Olá, [NOME]! 🔵\n\nPreciso de um momento da sua atenção.\n\nSua documentação está pendente na pós em *Cloud com Azure* e parte dos seus benefícios -- incluindo a *TFTEC Prime* -- ainda não foram liberados.\n\nPosso te guiar agora mesmo pelo processo de envio. Quando tiver um momento, me avisa!",
+    "Olá, [NOME]! Junior aqui. ⚠️\n\nJá faz alguns dias desde o início do seu onboarding na pós em *Cloud com Azure* e sua documentação ainda não chegou até nós.\n\nTudo bem por aí? Teve alguma dificuldade com o processo de envio? Estou disponível agora para resolvermos juntos.",
+    "Olá, [NOME]! 🔵\n\nQuero ser direto com você: sua documentação ainda não chegou e isso está segurando a liberação da *TFTEC Prime*, plataforma exclusiva do seu curso de *Cloud com Azure*.\n\nÉ um processo simples. Me avisa agora o que está travando e te ajudo a finalizar hoje mesmo!",
+    "Olá, [NOME]! ☁️\n\nPassando para te avisar que sua documentação na pós em *Cloud com Azure* ainda está pendente.\n\nQuanto mais tempo isso levar, mais você fica sem acesso à *TFTEC Prime*. Não quero que isso aconteça!\n\nTeve algum problema de acesso à plataforma? Me conta aqui.",
+    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *Cloud com Azure*. 🔵\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver isso juntos? Ou prefere que eu te envie o passo a passo por aqui? Me fala como prefere!",
+    "Olá, [NOME]! ⚠️\n\nSua documentação ainda não chegou até nós e o prazo para regularizar sua matrícula na pós em *Cloud com Azure* está avançando.\n\nNão quero que você perca o acesso à *TFTEC Prime* por uma pendência que podemos resolver em poucos minutos. Me chama aqui!",
+    "Olá, [NOME]! 🔵\n\nEstou aqui para garantir que você aproveite tudo o que o curso de *Cloud com Azure* tem a oferecer.\n\nPor enquanto, com a documentação pendente, a *TFTEC Prime* ainda não está acessível para você.\n\nMe conta: o que está impedindo o envio? Estou aqui para resolver agora.",
+    "Olá, [NOME]! Junior aqui. ☁️\n\nJá se passaram alguns dias desde o início do seu onboarding na pós em *Cloud com Azure* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido, mas isso pode afetar sua matrícula. Me fala o que está acontecendo -- resolvo com você agora mesmo!",
+    "Olá, [NOME]! ⚠️\n\nPassando com um aviso importante: sua documentação na pós em *Cloud com Azure* continua pendente.\n\nAssim que ela chegar, libero imediatamente seu acesso à *TFTEC Prime*. Vale a pena resolver isso hoje!\n\nTeve dificuldade em alguma etapa? Me chama aqui. 🔵",
+    "Olá, [NOME]! 🔵\n\nEstou aqui para te ajudar a dar mais um passo importante na pós em *Cloud com Azure*: o envio da sua documentação.\n\nEnquanto isso estiver pendente, o acesso à *TFTEC Prime* fica bloqueado -- e são conteúdos que fazem diferença.\n\nQual etapa está travando? Me conta!",
+    "Olá, [NOME]! Aqui é o Junior. ☁️\n\nSua documentação na pós em *Cloud com Azure* ainda está pendente.\n\nNão quero que isso impacte sua matrícula nem seu acesso à *TFTEC Prime*. Posso te ligar agora para resolvermos juntos em menos de 5 minutos?\n\nMe avisa aqui! ⚠️",
+    "Olá, [NOME]! 🔵\n\nEstou entrando em contato antes de precisar escalar o seu caso: sua documentação na pós em *Cloud com Azure* ainda não chegou até nós.\n\nIsso pode colocar em risco a regularização da sua matrícula e o acesso à *TFTEC Prime*.\n\nMe responde agora -- estou aqui para resolver junto com você. ⚠️"
   ],
-  engdados: [
-    "Oi, [NOME]! 👋\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós na pós em *Engenharia de Dados e IA*.\n\nEnquanto ela estiver pendente, parte dos seus benefícios ficam bloqueados.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora com você! 📊",
-    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação na pós em *Engenharia de Dados e IA* ainda está pendente.\n\nO processo é rápido. Me fala o que está travando e te guio pelo caminho agora mesmo!",
-    "Oi, [NOME]! 📊\n\nNotei que sua documentação ainda não foi enviada na pós em *Engenharia de Dados e IA*.\n\nSem ela, não consigo liberar seu acesso completo aos benefícios do curso.\n\nTeve algum problema de acesso à plataforma? Me conta aqui!",
-    "Olá, [NOME]! Preciso da sua atenção por um momento. ⚠️\n\nSua documentação está pendente na pós em *Engenharia de Dados e IA* e isso está segurando benefícios importantes da sua matrícula.\n\nPosso te ajudar agora mesmo a resolver. Topa?",
-    "Oi, [NOME]! Junior aqui. 📊\n\nJá faz alguns dias que estou aguardando sua documentação na pós em *Engenharia de Dados e IA*.\n\nTudo bem por aí? Teve alguma dificuldade com o envio? Estou disponível agora para resolver junto com você!",
-    "Olá, [NOME]! ⚠️\n\nVou ser direto: sua documentação na pós em *Engenharia de Dados e IA* ainda não chegou e isso está impactando o andamento do seu onboarding.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! 📊",
-    "Oi, [NOME]! 📊\n\nPassei para te avisar que sua documentação na pós em *Engenharia de Dados e IA* ainda está pendente.\n\nQuanto mais tempo passar, mais você fica sem acesso aos benefícios completos do curso.\n\nTeve algum problema de acesso à plataforma? Me conta!",
-    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *Engenharia de Dados e IA*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver isso juntos? Ou prefere que eu te mande o passo a passo aqui? Me fala! 📊",
-    "Oi, [NOME]! ⚠️\n\nSua documentação na pós em *Engenharia de Dados e IA* ainda não chegou e o prazo para regularizar sua matrícula está avançando.\n\nNão quero que você perca benefícios por uma pendência que a gente consegue resolver agora. Me chama aqui! 📊",
-    "Olá, [NOME]! 📊\n\nMinha missão é garantir que você aproveite tudo que a pós em *Engenharia de Dados e IA* tem a oferecer.\n\nMas com a documentação pendente, parte dos benefícios seguem bloqueados.\n\nMe conta: o que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
-    "Oi, [NOME]! Junior aqui. 📊\n\nJá são alguns dias desde que você iniciou o onboarding na pós em *Engenharia de Dados e IA* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo — resolvo com você agora mesmo! ⚠️",
-    "Olá, [NOME]! ⚠️\n\nAviso importante: sua documentação na pós em *Engenharia de Dados e IA* continua pendente.\n\nVale a pena resolver isso hoje para garantir seu acesso completo ao curso!\n\nTeve dificuldade em alguma etapa? Me chama aqui. 📊",
-    "Oi, [NOME]! 📊\n\nEstou aqui para te ajudar a dar mais um passo importante: enviar sua documentação na pós em *Engenharia de Dados e IA*.\n\nEnquanto estiver pendente, benefícios do curso ficam bloqueados.\n\nQual etapa está travando você? Me conta! ⚠️",
-    "Olá, [NOME]! Aqui é o Junior. 📊\n\nSua documentação na pós em *Engenharia de Dados e IA* segue pendente.\n\nNão quero que isso impacte sua matrícula. Posso te ligar agora para a gente resolver em menos de 5 minutos?\n\nMe avisa aqui! ⚠️",
-    "Oi, [NOME]! ⚠️\n\nÚltima tentativa antes de precisar escalar o seu caso: sua documentação na pós em *Engenharia de Dados e IA* ainda não chegou até nós.\n\nIsso coloca em risco a regularização da sua matrícula.\n\nMe responde agora — estou aqui para resolver junto com você. 📊"
+    engdados: [
+    "Olá, [NOME]! Tudo bem? 😊\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós na pós em *Engenharia de Dados e IA*.\n\nEnquanto ela estiver pendente, parte dos seus benefícios ficam bloqueados.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora com você! 📊",
+    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação na pós em *Engenharia de Dados e IA* ainda está pendente.\n\nO processo é simples e rápido. Me fala o que está te travando e te guio agora mesmo!",
+    "Olá, [NOME]! 📊\n\nPassando para te avisar que sua documentação ainda não foi enviada na pós em *Engenharia de Dados e IA*.\n\nSem ela, não consigo liberar seu acesso completo aos benefícios do curso.\n\nTeve algum problema de acesso à plataforma? Me conta aqui!",
+    "Olá, [NOME]! ⚠️\n\nPreciso de um momento da sua atenção.\n\nSua documentação está pendente na pós em *Engenharia de Dados e IA* e isso está segurando benefícios importantes da sua matrícula.\n\nPosso te ajudar agora mesmo a resolver. Quando tiver um momento, me avisa!",
+    "Olá, [NOME]! Junior aqui. 📊\n\nJá faz alguns dias desde o início do seu onboarding na pós em *Engenharia de Dados e IA* e sua documentação ainda não chegou até nós.\n\nTudo bem por aí? Teve alguma dificuldade com o envio? Estou disponível agora para resolvermos juntos.",
+    "Olá, [NOME]! ⚠️\n\nQuero ser direto: sua documentação na pós em *Engenharia de Dados e IA* ainda não chegou e isso está impactando o andamento do seu onboarding.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! 📊",
+    "Olá, [NOME]! 📊\n\nPassando para te avisar que sua documentação na pós em *Engenharia de Dados e IA* ainda está pendente.\n\nQuanto mais tempo isso levar, mais você fica sem acesso aos benefícios completos do curso. Não quero que isso aconteça!\n\nTeve algum problema? Me conta.",
+    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *Engenharia de Dados e IA*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver juntos? Ou prefere que eu te envie o passo a passo por aqui? Me fala! 📊",
+    "Olá, [NOME]! ⚠️\n\nSua documentação na pós em *Engenharia de Dados e IA* ainda não chegou e o prazo para regularizar sua matrícula está avançando.\n\nNão quero que você perca benefícios por uma pendência que podemos resolver em poucos minutos. Me chama aqui! 📊",
+    "Olá, [NOME]! 📊\n\nEstou aqui para garantir que você aproveite tudo o que a pós em *Engenharia de Dados e IA* tem a oferecer.\n\nPor enquanto, com a documentação pendente, parte dos benefícios ainda não estão acessíveis para você.\n\nMe conta: o que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
+    "Olá, [NOME]! Junior aqui. 📊\n\nJá se passaram alguns dias desde o início do seu onboarding na pós em *Engenharia de Dados e IA* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo -- resolvo com você agora mesmo! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nPassando com um aviso importante: sua documentação na pós em *Engenharia de Dados e IA* continua pendente.\n\nVale a pena resolver isso hoje para garantir seu acesso completo ao curso!\n\nTeve dificuldade em alguma etapa? Me chama aqui. 📊",
+    "Olá, [NOME]! 📊\n\nEstou aqui para te ajudar a dar mais um passo importante: o envio da sua documentação na pós em *Engenharia de Dados e IA*.\n\nEnquanto estiver pendente, benefícios do curso ficam bloqueados.\n\nQual etapa está travando? Me conta! ⚠️",
+    "Olá, [NOME]! Aqui é o Junior. 📊\n\nSua documentação na pós em *Engenharia de Dados e IA* ainda está pendente.\n\nNão quero que isso impacte sua matrícula. Posso te ligar agora para resolvermos juntos em menos de 5 minutos?\n\nMe avisa aqui! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nEstou entrando em contato antes de precisar escalar o seu caso: sua documentação na pós em *Engenharia de Dados e IA* ainda não chegou até nós.\n\nIsso pode colocar em risco a regularização da sua matrícula.\n\nMe responde agora -- estou aqui para resolver junto com você. 📊"
   ],
-  ianegocios: [
-    "Oi, [NOME]! 👋\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós na pós em *IA Aplicada a Negócios*.\n\nEnquanto ela estiver pendente, seu acesso aos *Workshops bônus* fica bloqueado.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora! 🤖",
-    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação na pós em *IA Aplicada a Negócios* ainda está pendente e isso está segurando o link dos *Workshops bônus*.\n\nO processo é rápido. Me fala o que está travando e te guio agora mesmo!",
-    "Oi, [NOME]! 🤖\n\nNotei que sua documentação ainda não foi enviada na pós em *Inteligência Artificial Aplicada a Negócios*.\n\nSem ela, não consigo liberar os *Workshops bônus* para você.\n\nTeve algum problema de acesso à plataforma? Me conta aqui!",
-    "Olá, [NOME]! Preciso da sua atenção. ⚠️\n\nSua documentação está pendente na pós em *IA Aplicada a Negócios* e isso está bloqueando os *Workshops bônus* — um dos principais diferenciais do seu curso.\n\nPosso te ajudar agora mesmo a resolver. Topa? 🤖",
-    "Oi, [NOME]! Junior aqui. 🤖\n\nJá faz alguns dias que estou aguardando sua documentação na pós em *IA Aplicada a Negócios*.\n\nEnquanto isso, os *Workshops bônus* ficam fora do seu alcance. Tive alguma dificuldade com o envio? Estou disponível agora para resolver junto com você!",
-    "Olá, [NOME]! ⚠️\n\nVou ser direto: sua documentação na pós em *IA Aplicada a Negócios* ainda não chegou e os *Workshops bônus* seguem bloqueados.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! 🤖",
-    "Oi, [NOME]! 🤖\n\nPassei para te avisar que sua documentação na pós em *Inteligência Artificial Aplicada a Negócios* ainda está pendente.\n\nOs *Workshops bônus* são conteúdos exclusivos que valem muito — não deixa para depois!\n\nTeve algum problema? Me conta!",
-    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *IA Aplicada a Negócios*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver e eu já libero os *Workshops bônus* na sequência? Me fala! 🤖",
-    "Oi, [NOME]! ⚠️\n\nSua documentação na pós em *IA Aplicada a Negócios* ainda não chegou e o prazo está avançando.\n\nNão quero que você perca os *Workshops bônus* por uma pendência que a gente resolve em minutos. Me chama aqui! 🤖",
-    "Olá, [NOME]! 🤖\n\nMinha missão é garantir que você aproveite tudo da pós em *IA Aplicada a Negócios* — incluindo os *Workshops bônus*.\n\nMas com a documentação pendente, isso segue bloqueado.\n\nO que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
-    "Oi, [NOME]! Junior aqui. 🤖\n\nJá são alguns dias no onboarding da pós em *Inteligência Artificial Aplicada a Negócios* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo — resolvo com você agora mesmo! ⚠️",
-    "Olá, [NOME]! ⚠️\n\nAviso importante: sua documentação na pós em *IA Aplicada a Negócios* continua pendente e os *Workshops bônus* seguem bloqueados.\n\nVale resolver hoje! Teve dificuldade em alguma etapa? Me chama aqui. 🤖",
-    "Oi, [NOME]! 🤖\n\nEstou aqui para te ajudar a dar esse passo: enviar sua documentação na pós em *IA Aplicada a Negócios*.\n\nAssim que chegar, libero imediatamente os *Workshops bônus* pra você!\n\nQual etapa está travando? Me conta! ⚠️",
-    "Olá, [NOME]! Aqui é o Junior. 🤖\n\nSua documentação na pós em *IA Aplicada a Negócios* segue pendente.\n\nNão quero que isso impacte sua matrícula nem o acesso aos *Workshops bônus*. Posso te ligar agora para resolver em poucos minutos?\n\nMe avisa! ⚠️",
-    "Oi, [NOME]! ⚠️\n\nÚltima tentativa antes de precisar escalar o seu caso: sua documentação na pós em *IA Aplicada a Negócios* ainda não chegou até nós.\n\nIsso coloca em risco sua matrícula e o acesso aos *Workshops bônus*.\n\nMe responde agora — estou aqui para resolver com você. 🤖"
+    ianegocios: [
+    "Olá, [NOME]! Tudo bem? 😊\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós na pós em *IA Aplicada a Negócios*.\n\nEnquanto ela estiver pendente, seu acesso aos *Workshops bônus* fica bloqueado.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora! 🤖",
+    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação na pós em *IA Aplicada a Negócios* ainda está pendente e isso está segurando o link dos *Workshops bônus*.\n\nO processo é simples. Me fala o que está travando e te guio agora mesmo!",
+    "Olá, [NOME]! 🤖\n\nPassando para te avisar que sua documentação ainda não foi enviada na pós em *Inteligência Artificial Aplicada a Negócios*.\n\nSem ela, não consigo liberar os *Workshops bônus* para você.\n\nTeve algum problema de acesso à plataforma? Me conta aqui!",
+    "Olá, [NOME]! ⚠️\n\nPreciso de um momento da sua atenção.\n\nSua documentação está pendente na pós em *IA Aplicada a Negócios* e isso está bloqueando os *Workshops bônus* -- um dos principais diferenciais do seu curso.\n\nPosso te ajudar agora mesmo a resolver. Quando tiver um momento, me avisa! 🤖",
+    "Olá, [NOME]! Junior aqui. 🤖\n\nJá faz alguns dias desde o início do seu onboarding na pós em *IA Aplicada a Negócios* e sua documentação ainda não chegou.\n\nEnquanto isso, os *Workshops bônus* ficam fora do seu alcance. Teve alguma dificuldade? Estou disponível agora para resolvermos juntos.",
+    "Olá, [NOME]! ⚠️\n\nQuero ser direto: sua documentação na pós em *IA Aplicada a Negócios* ainda não chegou e os *Workshops bônus* seguem bloqueados.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! 🤖",
+    "Olá, [NOME]! 🤖\n\nPassando para te avisar que sua documentação na pós em *Inteligência Artificial Aplicada a Negócios* ainda está pendente.\n\nOs *Workshops bônus* têm conteúdos exclusivos que fazem parte da sua formação -- não deixa para depois!\n\nTeve algum problema? Me conta.",
+    "Olá, [NOME]! Aqui é o Junior, do CS da pós em *IA Aplicada a Negócios*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para resolvermos juntos e já libero os *Workshops bônus* na sequência? Me fala! 🤖",
+    "Olá, [NOME]! ⚠️\n\nSua documentação na pós em *IA Aplicada a Negócios* ainda não chegou e o prazo está avançando.\n\nNão quero que você perca os *Workshops bônus* por uma pendência que podemos resolver em poucos minutos. Me chama aqui! 🤖",
+    "Olá, [NOME]! 🤖\n\nEstou aqui para garantir que você aproveite tudo da pós em *IA Aplicada a Negócios* -- incluindo os *Workshops bônus*.\n\nPor enquanto, com a documentação pendente, esse acesso ainda está bloqueado.\n\nO que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
+    "Olá, [NOME]! Junior aqui. 🤖\n\nJá se passaram alguns dias no onboarding da pós em *Inteligência Artificial Aplicada a Negócios* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo -- resolvo com você agora mesmo! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nPassando com um aviso importante: sua documentação na pós em *IA Aplicada a Negócios* continua pendente e os *Workshops bônus* seguem bloqueados.\n\nVale a pena resolver hoje! Teve dificuldade em alguma etapa? Me chama aqui. 🤖",
+    "Olá, [NOME]! 🤖\n\nEstou aqui para te ajudar a dar esse passo: o envio da sua documentação na pós em *IA Aplicada a Negócios*.\n\nAssim que chegar, libero imediatamente os *Workshops bônus* para você!\n\nQual etapa está travando? Me conta! ⚠️",
+    "Olá, [NOME]! Aqui é o Junior. 🤖\n\nSua documentação na pós em *IA Aplicada a Negócios* ainda está pendente.\n\nNão quero que isso impacte sua matrícula nem o acesso aos *Workshops bônus*. Posso te ligar agora para resolvermos em poucos minutos?\n\nMe avisa! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nEstou entrando em contato antes de precisar escalar o seu caso: sua documentação na pós em *IA Aplicada a Negócios* ainda não chegou até nós.\n\nIsso pode colocar em risco sua matrícula e o acesso aos *Workshops bônus*.\n\nMe responde agora -- estou aqui para resolver junto com você. 🤖"
   ],
-  mbadireito: [
-    "Oi, [NOME]! 👋\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós no *MBA em IA Aplicada ao Direito*.\n\nEnquanto ela estiver pendente, seu acesso aos *Workshops bônus* fica bloqueado.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora! ⚖️",
-    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* ainda está pendente e isso está segurando o acesso aos *Workshops bônus*.\n\nO processo é rápido. Me fala o que está travando e te guio agora mesmo! ⚖️",
-    "Oi, [NOME]! ⚖️\n\nNotei que sua documentação ainda não foi enviada no *MBA em IA Aplicada ao Direito*.\n\nSem ela, não consigo liberar os *Workshops bônus* — conteúdos exclusivos sobre IA no universo jurídico.\n\nTeve algum problema de acesso? Me conta aqui!",
-    "Olá, [NOME]! Preciso da sua atenção. ⚠️\n\nSua documentação está pendente no *MBA em IA Aplicada ao Direito* e isso está bloqueando os *Workshops bônus* — um dos principais diferenciais do curso.\n\nPosso te ajudar agora mesmo a resolver. Topa? ⚖️",
-    "Oi, [NOME]! Junior aqui. ⚖️\n\nJá faz alguns dias que estou aguardando sua documentação no *MBA em Inteligência Artificial Aplicada ao Direito*.\n\nEnquanto isso, os *Workshops bônus* ficam fora do seu alcance. Teve alguma dificuldade? Estou disponível agora para resolver junto com você!",
-    "Olá, [NOME]! ⚠️\n\nVou ser direto: sua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou e os *Workshops bônus* seguem bloqueados.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! ⚖️",
-    "Oi, [NOME]! ⚖️\n\nPassei para te avisar que sua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* ainda está pendente.\n\nOs *Workshops bônus* têm conteúdos exclusivos de IA e Direito — não deixa para depois!\n\nTeve algum problema? Me conta!",
-    "Olá, [NOME]! Aqui é o Junior, do CS do *MBA em IA Aplicada ao Direito*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para a gente resolver e eu já libero os *Workshops bônus* na sequência? Me fala! ⚖️",
-    "Oi, [NOME]! ⚠️\n\nSua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou e o prazo está avançando.\n\nNão quero que você perca os *Workshops bônus* por uma pendência que a gente resolve em minutos. Me chama aqui! ⚖️",
-    "Olá, [NOME]! ⚖️\n\nMinha missão é garantir que você aproveite tudo do *MBA em IA Aplicada ao Direito* — incluindo os *Workshops bônus*.\n\nMas com a documentação pendente, isso segue bloqueado.\n\nO que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
-    "Oi, [NOME]! Junior aqui. ⚖️\n\nJá são alguns dias no onboarding do *MBA em Inteligência Artificial Aplicada ao Direito* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo — resolvo com você agora mesmo! ⚠️",
-    "Olá, [NOME]! ⚠️\n\nAviso importante: sua documentação no *MBA em IA Aplicada ao Direito* continua pendente e os *Workshops bônus* seguem bloqueados.\n\nVale resolver hoje! Teve dificuldade em alguma etapa? Me chama aqui. ⚖️",
-    "Oi, [NOME]! ⚖️\n\nEstou aqui para te ajudar a dar esse passo: enviar sua documentação no *MBA em IA Aplicada ao Direito*.\n\nAssim que chegar, libero imediatamente os *Workshops bônus* pra você!\n\nQual etapa está travando? Me conta! ⚠️",
-    "Olá, [NOME]! Aqui é o Junior. ⚖️\n\nSua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* segue pendente.\n\nNão quero que isso impacte sua matrícula nem o acesso aos *Workshops bônus*. Posso te ligar agora para resolver em poucos minutos?\n\nMe avisa! ⚠️",
-    "Oi, [NOME]! ⚠️\n\nÚltima tentativa antes de precisar escalar o seu caso: sua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou até nós.\n\nIsso coloca em risco sua matrícula e o acesso aos *Workshops bônus*.\n\nMe responde agora — estou aqui para resolver com você. ⚖️"
+    mbadireito: [
+    "Olá, [NOME]! Tudo bem? 😊\n\nPassei para verificar e notei que sua documentação ainda não chegou até nós no *MBA em IA Aplicada ao Direito*.\n\nEnquanto ela estiver pendente, seu acesso aos *Workshops bônus* fica bloqueado.\n\nTeve alguma dificuldade? Me conta aqui que resolvo agora! ⚖️",
+    "Olá, [NOME]! Aqui é o Junior. ⚠️\n\nSua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* ainda está pendente e isso está segurando o acesso aos *Workshops bônus*.\n\nO processo é simples. Me fala o que está travando e te guio agora mesmo! ⚖️",
+    "Olá, [NOME]! ⚖️\n\nPassando para te avisar que sua documentação ainda não foi enviada no *MBA em IA Aplicada ao Direito*.\n\nSem ela, não consigo liberar os *Workshops bônus* -- conteúdos exclusivos sobre IA no universo jurídico.\n\nTeve algum problema de acesso? Me conta aqui!",
+    "Olá, [NOME]! ⚠️\n\nPreciso de um momento da sua atenção.\n\nSua documentação está pendente no *MBA em IA Aplicada ao Direito* e isso está bloqueando os *Workshops bônus* -- um dos principais diferenciais do curso.\n\nPosso te ajudar agora mesmo a resolver. Quando tiver um momento, me avisa! ⚖️",
+    "Olá, [NOME]! Junior aqui. ⚖️\n\nJá faz alguns dias desde o início do seu onboarding no *MBA em Inteligência Artificial Aplicada ao Direito* e sua documentação ainda não chegou.\n\nEnquanto isso, os *Workshops bônus* ficam fora do seu alcance. Teve alguma dificuldade? Estou disponível agora para resolvermos juntos.",
+    "Olá, [NOME]! ⚠️\n\nQuero ser direto: sua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou e os *Workshops bônus* seguem bloqueados.\n\nÉ um processo simples. Me avisa o que está travando e te ajudo a finalizar hoje mesmo! ⚖️",
+    "Olá, [NOME]! ⚖️\n\nPassando para te avisar que sua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* ainda está pendente.\n\nOs *Workshops bônus* têm conteúdos exclusivos de IA e Direito que fazem parte da sua formação -- não deixa para depois!\n\nTeve algum problema? Me conta.",
+    "Olá, [NOME]! Aqui é o Junior, do CS do *MBA em IA Aplicada ao Direito*. ⚠️\n\nEstou vendo que sua documentação ainda não foi enviada.\n\nPosso te ligar agora para resolvermos juntos e já libero os *Workshops bônus* na sequência? Me fala! ⚖️",
+    "Olá, [NOME]! ⚠️\n\nSua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou e o prazo está avançando.\n\nNão quero que você perca os *Workshops bônus* por uma pendência que podemos resolver em poucos minutos. Me chama aqui! ⚖️",
+    "Olá, [NOME]! ⚖️\n\nEstou aqui para garantir que você aproveite tudo do *MBA em IA Aplicada ao Direito* -- incluindo os *Workshops bônus*.\n\nPor enquanto, com a documentação pendente, esse acesso ainda está bloqueado.\n\nO que está impedindo o envio? Estou aqui para resolver agora! ⚠️",
+    "Olá, [NOME]! Junior aqui. ⚖️\n\nJá se passaram alguns dias no onboarding do *MBA em Inteligência Artificial Aplicada ao Direito* e sua documentação ainda não chegou.\n\nSei que o dia a dia é corrido. Me fala o que está acontecendo -- resolvo com você agora mesmo! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nPassando com um aviso importante: sua documentação no *MBA em IA Aplicada ao Direito* continua pendente e os *Workshops bônus* seguem bloqueados.\n\nVale a pena resolver hoje! Teve dificuldade em alguma etapa? Me chama aqui. ⚖️",
+    "Olá, [NOME]! ⚖️\n\nEstou aqui para te ajudar a dar esse passo: o envio da sua documentação no *MBA em IA Aplicada ao Direito*.\n\nAssim que chegar, libero imediatamente os *Workshops bônus* para você!\n\nQual etapa está travando? Me conta! ⚠️",
+    "Olá, [NOME]! Aqui é o Junior. ⚖️\n\nSua documentação no *MBA em Inteligência Artificial Aplicada ao Direito* ainda está pendente.\n\nNão quero que isso impacte sua matrícula nem o acesso aos *Workshops bônus*. Posso te ligar agora para resolvermos em poucos minutos?\n\nMe avisa! ⚠️",
+    "Olá, [NOME]! ⚠️\n\nEstou entrando em contato antes de precisar escalar o seu caso: sua documentação no *MBA em IA Aplicada ao Direito* ainda não chegou até nós.\n\nIsso pode colocar em risco sua matrícula e o acesso aos *Workshops bônus*.\n\nMe responde agora -- estou aqui para resolver junto com você. ⚖️"
   ]
 };
 
@@ -2876,6 +2866,15 @@ document.addEventListener('DOMContentLoaded', () => renderUrgencia('azure'));
 
 // Renderizar Azure por padrão ao abrir a aba
 renderBancoWkp('azure');
+
+// Inicializar grids das categorias principais ao carregar
+document.addEventListener('DOMContentLoaded', () => {
+  renderMsgGrid('boasvindas');
+  renderMsgGrid('documentacao');
+  renderMsgGrid('encerramento');
+  renderBancoWkp('azure');
+  renderUrgencia('azure');
+});
 
 </script>
 </body>
